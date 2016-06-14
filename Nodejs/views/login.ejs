@@ -1,0 +1,61 @@
+
+<html >
+
+
+  <head>
+    <title>E-health login</title>
+    <link rel="stylesheet" href="stylesheets/loginStyle.css">
+
+    <script>
+    if([<%=check%>] == 1){
+      alert("Wrong username or password! ")
+    }
+    </script>
+
+    <script src="/javascripts/sha-1.js"></script>
+    
+    <script type="text/JavaScript">
+      function submit1(){
+        if(document.forms['f1'].Upass.value == "" || document.forms['f1'].Uname.value==""){
+          alert("Please don't leave any empty fields!")
+          return false;
+        }else {
+          var passHash = SHA1(document.forms['f1'].Upass.value);
+          document.getElementById('hiddenField').value = passHash;
+          var passLength = (document.forms['f1'].Upass.value).length
+          document.forms['f1'].Upass.value= passHash.toString().substring(0,passLength);
+          document.forms['f1'].submit();
+        }
+      }
+</script>
+
+  </head>
+
+
+
+  <body>
+
+
+
+
+
+<div class="red"><img src="http://ccis.ksu.edu.sa/sites/all/themes/zurbksu2/img/ksu-logo.png?77" alt="ksu"></div>
+
+    <section>
+  <span></span>
+  <h1>Doctor Login</h1>
+  <form id="f1" action="http://10.131.198.171:443/vlogin" method="post">
+    <input type='hidden' id= 'hiddenField' name='pass' value='' />
+    <input name="Uname" placeholder='User Name' type='text'>
+    <input name="Upass" placeholder='Password' type='password'>
+    <button onclick="return submit1()">LOGIN</button>
+  </form>
+
+</section>
+
+
+    
+    
+    
+  </body>
+</html>

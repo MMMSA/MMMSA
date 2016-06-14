@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title>Patient statistics</title>
+
+    <script language="JavaScript">
+        function toggleTable() {
+            var lTable = document.getElementById("table")
+            lTable.style.display = (lTable.style.display == "block") ? "none" : "block";
+        }
+    </script>
+
+    <script src='/javascripts/Chart.min.js'></script>
+
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+
+    <link rel="stylesheet" href="../stylesheets/patientStyle.css">
+
+    <script>
+        function validateDate() {
+            var e = document.getElementById("patient");
+            var y = document.getElementById("Year");
+            var m = document.getElementById("Month");
+            var d = document.getElementById("Day");
+            var Patientselected = e.options[e.selectedIndex].value;
+            var Yearselected = y.options[y.selectedIndex].value;
+            var Monthselected = m.options[m.selectedIndex].value;
+            var Dayselected = d.options[d.selectedIndex].value;
+            if (Yearselected == 0 || Monthselected == 0 || Dayselected == 0 || Patientselected == -1) {
+                alert("Please don't leave ay selection empty!");
+                return false;
+            }
+            var Sdate = "";
+            var Edate = "";
+            if (Patientselected == 324) {
+                Sdate = "<%=JSON.stringify(dt[0])%>".split("-");
+                Edate = "<%=JSON.stringify(dt[1])%>".split("-");
+            } else if (Patientselected == 325) {
+                Sdate = "<%=JSON.stringify(dt[2])%>".split("-");
+                Edate = "<%=JSON.stringify(dt[3])%>".split("-");
+            } else if (Patientselected == 326) {
+                Sdate = "<%=JSON.stringify(dt[4])%>".split("-");
+                Edate = "<%=JSON.stringify(dt[5])%>".split("-");
+            }
+
+
+            var Syear = parseInt(Sdate[0].substring(5, 9))
+            var Smonth = parseInt(Sdate[1])
+            var Sday = parseInt(Sdate[2].substring(0, 2))
+
+            var Eyear = parseInt(Edate[0].substring(5, 9))
+            var Emonth = parseInt(Edate[1])
+            var Eday = parseInt(Edate[2].substring(0, 2))
+
+
+            var year = parseInt(document.forms['f1'].Year.value);
+            var month = parseInt(document.forms['f1'].Month.value);
+            var day = parseInt(document.forms['f1'].Day.value);
+            if (year < Syear || year > Eyear || month < Smonth || month > Emonth || day < Sday || day > Eday) {
+                alert("Wrong Entery,for the patient with id:" + Patientselected + "  The start date :" + Syear + "-" + Smonth + "-" + Sday + " , The end date: " + Eyear + "-" + Emonth + "-" + Eday);
+                return false;
+            } else
+                return true;
+
+
+        }
+
+
+
+
+    </script>
+
+
+
+
+
+</head>
+
+<body>
+<div class="red">
+    <form id="f1" action="http://localhost:443/statistics" method="post">
+        <img src="http://ccis.ksu.edu.sa/sites/all/themes/zurbksu2/img/ksu-logo.png?77" alt="ksu">
+
+        <select name="Year" id="Year">
+            <option value="0"> - Year - </option>
+            <option value="2015">2015</option>
+            <option value="2016">2016</option>
+        </select>
+
+        <select name="Month" id="Month" >
+            <option value="0"> - Month - </option>
+            <option value="01">January</option>
+            <option value="02">Febuary</option>
+            <option value="03">March</option>
+            <option value="04">April</option>
+            <option value="05">May</option>
+            <option value="06">June</option>
+            <option value="07">July</option>
+            <option value="08">August</option>
+            <option value="09">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+        </select>
+
+        <select name="Day" id="Day" value="0">
+            <option value="0"> - Day - </option>
+            <option value="01">1</option>
+            <option value="02">2</option>
+            <option value="03">3</option>
+            <option value="04">4</option>
+            <option value="05">5</option>
+            <option value="06">6</option>
+            <option value="07">7</option>
+            <option value="08">8</option>
+            <option value="09">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+            <option value="21">21</option>
+            <option value="22">22</option>
+            <option value="23">23</option>
+            <option value="24">24</option>
+            <option value="25">25</option>
+            <option value="26">26</option>
+            <option value="27">27</option>
+            <option value="28">28</option>
+            <option value="29">29</option>
+            <option value="30">30</option>
+            <option value="31">31</option>
+        </select>
+
+        <select name="patient" id="patient" >
+            <option value="-1">- Patient Id -</option>
+            <% for(var i=0; i< patient.length ;i++) { %>
+            <option value="<%=patient[i]%>">
+                <%= patient[i]%>
+            </option>
+            <% } %>
+        </select>
+        <button  type="submit" onclick="return validateDate()">search</button>
+    </form>
+
+</div>
+
+<section>
+    <p class="one">Average Temp: <%-JSON.stringify(avg.toString().substring(0,5))%> </p>
+
+    <canvas id="chart" width="600" height="400"></canvas>
+    <br>
+    <br>
+
+    <script>
+
+
+        var chartData = {
+
+
+            labels : <%- JSON.stringify(date)%>,
+            datasets : [
+                {
+                    fillColor: "rgba(151,187,205,0.2)",
+                    strokeColor: "rgba(151,187,205,1)",
+                    pointColor: "rgba(151,187,205,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data :[<%= temp%>]
+                }
+            ]
+        }
+        var chart = document.getElementById('chart').getContext('2d');
+        new Chart(chart).Line(chartData);
+    </script>
+
+    <button class="sec" onclick="toggleTable()">show</button>
+    <!--div id="table" style="display: none"-->
+    <table id="table" style="display: none" >
+        <thead>
+        <tr>
+            <th>Time</th>
+            <th>Temp</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <% for(var i=0; i< temp.length ;i++) { %>
+
+        <tr>
+            <td><%= date[i].toString().substring(0,21)%></td>
+            <td><%= temp[i]%></td>
+        </tr>
+        <% } %>
+        </tbody>
+    </table>
+    <!--/div-->
+
+    <span></span>
+    <form id="f2" action="http://10.131.198.171:443/updateDesc" method="post">
+   <textarea name="box1" rows="4" cols="50" maxlength="200"> <%= description%></textarea>
+        <button type="submit" class="sec" onclick="alert('description has been updated successfuly')">Update description </button>
+    </form>
+</section>
+
+
+
+
+</body>
+</html>
