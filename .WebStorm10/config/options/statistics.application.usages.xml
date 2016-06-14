@@ -1,0 +1,40 @@
+<application>
+  <component name="StatisticsApplicationUsages">
+    <group name="JavaScript versions">
+      <project id="untitled" values="DEFAULT" collectionTime="1445120959998" />
+      <project id="untitled1" values="DEFAULT" collectionTime="1465412725930" />
+    </group>
+    <group name="run-configuration-type">
+      <project id="untitled1" values="NodeJSConfigurationType" collectionTime="1465412725620" />
+    </group>
+    <group name="javaScript Frameworks">
+      <project id="untitled1" values="Node.js Core Modules 4.2.1,node_modules" collectionTime="1465412725930" />
+    </group>
+    <group name="file-type">
+      <project id="untitled" values="HTML,PLAIN_TEXT,XML,UNKNOWN" collectionTime="1445120959838" />
+      <project id="untitled1" values="Jade,CSS,JavaScript,JSON,HTML,PLAIN_TEXT,UNKNOWN,XML" collectionTime="1465412725650" />
+    </group>
+    <group name="module type">
+      <project id="untitled" values="WEB_MODULE" collectionTime="1445120959814" />
+      <project id="untitled1" values="WEB_MODULE" collectionTime="1465412725619" />
+    </group>
+    <group name="javaScript Scope Usages">
+      <project id="untitled" values="Project,Project" collectionTime="1445120959998" />
+      <project id="untitled1" values="Directory,Project,Project,Project,Project" collectionTime="1465412725930" />
+    </group>
+  </component>
+  <component name="UsageTrigger">
+    <counts>
+      <entry feature="NewDirectoryProjectAction.Empty Project" count="1" />
+      <entry feature="NewDirectoryProjectAction.Node.js Express App" count="1" />
+      <entry feature="execute.NodeJSConfigurationType.Debug" count="1" />
+      <entry feature="execute.NodeJSConfigurationType.Run" count="19" />
+      <entry feature="ide.settings.Appearance" count="3" />
+      <entry feature="ide.settings.Colors_&amp;_Fonts" count="1" />
+      <entry feature="ide.settings.Console_Font" count="1" />
+      <entry feature="ide.settings.Font" count="4" />
+      <entry feature="ideaapp.started" count="13" />
+      <entry feature="welcome.screen.null" count="1" />
+    </counts>
+  </component>
+</application>
