@@ -1,1 +1,0 @@
-var libraryName="lib1";
